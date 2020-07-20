@@ -1,6 +1,6 @@
 
 import random
-from enum import Enum 
+import yaml
 
 # Dice = Enum(
 #     "d20"=20,
@@ -15,17 +15,20 @@ from enum import Enum
 #     "dmg_dice": Dice.d10
 # }
 
-NAT20=20
-NAT1=1
 
-DICE = {
-    "d20":20,
-    "d12":12,
-    "d10":10,
-    "d8":8,
-    "d6":6,
-    "d4":4
-}
+class Character:
+
+    def __init__(self, name, number_of_attacks, hit_modifier, damage_modifier,
+                damage_dice, critical_range):
+        self.name = name
+        self.number_of_attacks = number_of_attacks
+        self.hit_modifier = hit_modifier
+        self.damage_modifier = damage_modifier
+        dice = damage_dice.split("d")
+        self.damage_dice_count = dice[0]
+        self.damage_dice_size = dice[1]
+        self.critical_range = critical_range
+
 
 def roll_attack():
     mod = 7
@@ -89,7 +92,21 @@ def do_turn():
     
     return total_damage
 
+sample_characters = []
 
-for turn in range (20):
-    print(f"Attack Action...{do_turn()} damage done")
+with open("characters.yaml") as f:
+    data = yaml.load(f, Loader=yaml.FullLoader)
+    for character in data:
+        for name,stats in character.items():
+            sample_characters.append(Character(
+                name=name, 
+                number_of_attacks=stats["number_of_attacks"],
+                hit_modifier=stats["hit_modifier"],
+                damage_modifier=stats["damage_modifier"],
+                damage_dice=stats["damage_dice"],
+                critical_range=stats["critical_range"]))
 
+
+# for turn in range (20):
+#     print(f"Attack Action...{do_turn()} damage done")
+print(sample_characters)

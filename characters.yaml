@@ -1,0 +1,13 @@
+- Two Weapon Fighter:
+    hit_modifier: 7
+    damage_modifier: 4
+    damage_dice: 1d6
+    critical_range: 20
+    number_of_attacks: 3
+
+- Great Weapon Fighter:
+    hit_modifier: 7
+    damage_modifier: 4
+    damage_dice: 2d6
+    critical_range: 20
+    number_of_attacks: 2
